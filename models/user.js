@@ -1,9 +1,10 @@
 const { Schema, model } = require('mongoose');
+const thoughtSchema = require('./thought');
 
 // Schema to create User model
 const userSchema = new Schema(
     {
-        usrename: {
+        username: {
             type: String,
             required: true,
             unique: true,
@@ -14,10 +15,9 @@ const userSchema = new Schema(
             type: String,
             required: true,
             unique: true,
-
         },
-        thoughts: {},
-        friends: {}
+        thoughts: [thoughtSchema],
+        friends: [userSchema]
     },
 );
 
