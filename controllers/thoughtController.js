@@ -26,7 +26,7 @@ module.exports = {
             return res.status(500).json(err);
         }
     },
-    async createthought(req, res) {
+    async createThought(req, res) {
         try {
             const thought = await Thought.create(req.body);
             const user = await User.findOneAndUpdate(
