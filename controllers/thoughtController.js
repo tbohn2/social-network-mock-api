@@ -31,7 +31,7 @@ module.exports = {
             const thought = await Thought.create(req.body);
             const user = await User.findOneAndUpdate(
                 { _id: req.body.userId },
-                { $push: thought.id },
+                { $push: { thoughts: thought } },
                 { runValidators: true, new: true }
             )
             res.json(user);
@@ -99,7 +99,7 @@ module.exports = {
                 return res.status(404).json({ message: 'No thought found with that ID' });
             }
 
-            res.json(thought);
+            res.json("Reaction deleted!");
         } catch (err) {
             res.status(500).json(err);
         }
