@@ -5,7 +5,7 @@ module.exports = {
     // Gets all users
     async getUsers(req, res) {
         try {
-            const users = await User.find();
+            const users = await User.find().select('-__v');
             res.json(users);
         } catch (err) {
             console.log(err);
@@ -16,8 +16,7 @@ module.exports = {
     async getOneUser(req, res) {
         try {
             // Finds user by its id excluding -__v value
-            const user = await User.findOne({ _id: req.params._id })
-                .select('-__v');
+            const user = await User.findOne({ _id: req.params._id }).select('-__v');
 
             if (!user) {
                 return res.status(404).json({ message: 'User does not exist' })
@@ -97,7 +96,7 @@ module.exports = {
             // Finds user by id and pulls friend id from friends key on user
             const user = await User.findOneAndUpdate(
                 { _id: req.params.userId },
-                { $pull: { friends: { _id: req.params.friendId } } },
+                { $pull: { friends: req.params.friendId } },
                 { runValidators: true, new: true }
             );
 
